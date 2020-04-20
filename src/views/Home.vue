@@ -78,7 +78,7 @@
     },
     created(){
       const _this = this
-      axios.get('http://localhost:8181/phone/index').then(function (resp) {
+      axios.get('http://localhost:8080/phone/index').then(function (resp) {
         _this.phones = resp.data.data.phones
         _this.categories = resp.data.data.categories
       })
@@ -86,14 +86,14 @@
     methods: {
       onClick(index) {
         const _this = this
-        axios.get('http://localhost:8181/phone/findByCategoryType/'+this.categories[index].type).then(function (resp) {
+        axios.get('http://localhost:8080/phone/findByCategoryType/'+this.categories[index].type).then(function (resp) {
           _this.phones = resp.data.data
         })
       },
       buy(index){
         this.show = true
         const _this = this
-        axios.get('http://localhost:8181/phone/findSpecsByPhoneId/'+this.phones[index].id).then(function (resp) {
+        axios.get('http://localhost:8080/phone/findSpecsByPhoneId/'+this.phones[index].id).then(function (resp) {
           _this.goods = resp.data.data.goods
           _this.sku = resp.data.data.sku
         })

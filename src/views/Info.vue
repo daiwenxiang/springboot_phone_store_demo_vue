@@ -85,7 +85,7 @@
         },
         created(){
             const _this = this
-            axios.get('http://localhost:8181/order/detail/'+this.$route.query.orderId).then(function (resp) {
+            axios.get('http://localhost:8080/order/detail/'+this.$route.query.orderId).then(function (resp) {
                 _this.data = resp.data.data
             })
         },

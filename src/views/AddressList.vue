@@ -22,7 +22,7 @@
         },
         created(){
             const _this = this
-            axios.get('http://localhost:8181/address/list').then(function (resp) {
+            axios.get('http://localhost:8080/address/list').then(function (resp) {
                 _this.list = resp.data.data
             })
         },
@@ -43,7 +43,7 @@
                     quantity: this.$store.state.quantity
                 }
                 const _this = this
-                axios.post('http://localhost:8181/order/create',orderForm).then(function (resp) {
+                axios.post('http://localhost:8080/order/create',orderForm).then(function (resp) {
                     if(resp.data.code == 0){
                         let instance = Toast('下单成功');
                         setTimeout(() => {

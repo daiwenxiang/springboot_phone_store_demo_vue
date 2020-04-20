@@ -20,7 +20,7 @@
         methods: {
             onSave(item) {
                 const _this = this
-                axios.post('http://localhost:8181/address/create',item).then(function (resp) {
+                axios.post('http://localhost:8080/address/create',item).then(function (resp) {
                     if(resp.data.code == 0){
                         let instance = Toast('添加成功');
                         setTimeout(() => {

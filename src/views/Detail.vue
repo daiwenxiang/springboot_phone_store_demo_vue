@@ -95,14 +95,14 @@
         },
         created(){
             const _this = this
-            axios.get('http://localhost:8181/order/detail/'+this.$route.query.orderId).then(function (resp) {
+            axios.get('http://localhost:8080/order/detail/'+this.$route.query.orderId).then(function (resp) {
                 _this.data = resp.data.data
             })
         },
         methods: {
             onSubmit:function () {
                 const _this = this
-                axios.put('http://localhost:8181/order/pay/'+this.$route.query.orderId).then(function (resp) {
+                axios.put('http://localhost:8080/order/pay/'+this.$route.query.orderId).then(function (resp) {
                     if(resp.data.code == 0){
                         let instance = Toast('订单'+resp.data.data.orderId+'支付成功');
                         setTimeout(() => {
