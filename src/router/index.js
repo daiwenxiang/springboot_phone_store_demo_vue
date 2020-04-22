@@ -10,7 +10,7 @@ import Info from '../views/Info'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     name: 'Home',

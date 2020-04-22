@@ -8,10 +8,7 @@ export default new Vuex.Store({
     specsId: '',
     quantity: ''
   },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+  mutations: {},
+  actions: {},
+  modules: {}
 })

@@ -3,21 +3,22 @@
 
     <van-row>
       <van-col span="24">
-        <van-tabs @click="onClick" sticky title-active-color="#E32DAB" color="#E32DAB" :line-width="100" :line-height="2">
+        <van-tabs :line-height="2" :line-width="100" @click="onClick" color="#E32DAB" sticky
+                  title-active-color="#E32DAB">
 
-          <van-tab v-for="index in categories.length" :title="categories[index-1].name" class="tab">
+          <van-tab :title="categories[index-1].name" class="tab" v-for="index in categories.length">
 
-            <van-card v-for="(item,index) in phones"
+            <van-card :desc="item.desc"
                       :price="item.price"
-                      :desc="item.desc"
-                      :title="item.title"
                       :thumb="item.thumb"
+                      :title="item.title"
+                      v-for="(item,index) in phones"
             >
               <template #tags>
-                <van-tag v-for="tag in item.tag" color="#f2826a" style="margin-left: 5px;">{{tag.name}}</van-tag>
+                <van-tag color="#f2826a" style="margin-left: 5px;" v-for="tag in item.tag">{{tag.name}}</van-tag>
               </template>
               <template #footer>
-                <van-button round type="info" size="mini" @click="buy(index)">购买</van-button>
+                <van-button @click="buy(index)" round size="mini" type="info">购买</van-button>
               </template>
             </van-card>
 
@@ -27,21 +28,21 @@
     </van-row>
 
     <van-sku
-            v-model="show"
-            :sku="sku"
-            :goods="goods"
-            :hide-stock="sku.hide_stock"
-            @buy-clicked="onBuyClicked"
+        :goods="goods"
+        :hide-stock="sku.hide_stock"
+        :sku="sku"
+        @buy-clicked="onBuyClicked"
+        v-model="show"
     >
       <template #sku-actions="props">
         <div class="van-sku-actions">
 
           <!-- 直接触发 sku 内部事件，通过内部事件执行 onBuyClicked 回调 -->
           <van-button
-                  square
-                  size="large"
-                  type="danger"
-                  @click="props.skuEventBus.$emit('sku:buy')"
+              @click="props.skuEventBus.$emit('sku:buy')"
+              size="large"
+              square
+              type="danger"
           >
             买买买
           </van-button>
@@ -55,14 +56,10 @@
 </template>
 
 <script>
-  import {
-    Toast,
-    PullRefresh,
-    Swipe,
-    SwipeItem
-  } from 'vant';
+  import {PullRefresh, Swipe, SwipeItem} from 'vant'
+
   export default {
-    comments:{
+    comments: {
       [PullRefresh.name]: PullRefresh,
       [Swipe.name]: Swipe,
       [SwipeItem.name]: SwipeItem
@@ -72,11 +69,11 @@
         categories: '',
         phones: '',
         show: true,
-        sku: '',
-        goods: ''
+        sku: {},
+        goods: {}
       }
     },
-    created(){
+    created() {
       const _this = this
       axios.get('http://localhost:8080/phone/index').then(function (resp) {
         _this.phones = resp.data.data.phones
@@ -86,19 +83,19 @@
     methods: {
       onClick(index) {
         const _this = this
-        axios.get('http://localhost:8080/phone/findByCategoryType/'+this.categories[index].type).then(function (resp) {
+        axios.get('http://localhost:8080/phone/findByCategoryType/' + this.categories[index].type).then(function (resp) {
           _this.phones = resp.data.data
         })
       },
-      buy(index){
+      buy(index) {
         this.show = true
         const _this = this
-        axios.get('http://localhost:8080/phone/findSpecsByPhoneId/'+this.phones[index].id).then(function (resp) {
+        axios.get('http://localhost:8080/phone/findSpecsByPhoneId/' + this.phones[index].id).then(function (resp) {
           _this.goods = resp.data.data.goods
           _this.sku = resp.data.data.sku
         })
       },
-      onBuyClicked(item){
+      onBuyClicked(item) {
         this.$store.state.specsId = item.selectedSkuComb.s1
         this.$store.state.quantity = item.selectedNum
         this.$router.push('/addressList')
